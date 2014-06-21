@@ -9,8 +9,8 @@
 		*/
 		private $var;
 	
-		function __construct($type, $group, $name) {
-			parent::__construct($type, $group, $name);
+		function __construct($space, $type, $group = null, $name = null) {
+			parent::__construct($space, $type, $group, $name);
 		}
 
 		/**
@@ -20,6 +20,9 @@
 		 **/
 		public function command(Entity $entity, Action $action) {
 			$entity->run($action);
+		}
+
+		public function work(){
 		}
 	}
 ?>

@@ -2,162 +2,60 @@
 	/**
 	* 
 	*/
-	class Entity {
+	abstract class Entity {
 		
 		private $guid;
-		private $name;
-		private $type;
-		private $group;
-		private $space;
+		private $soul = array();
+		protected $MODE;
+		const WORKING = 1;
+		const IDLE = 0;
 
-
-		function __construct($type, $group, $name) {
-			$this->setType($type);
-			$this->setGroup($group);
-			$this->setName($name);
+		function __construct($space, $type, $group = null, $name = null) {
+			$this->space = $space;
+			$this->type = $type;
+			$this->group = $group;
+			$this->name = $name;
+			$this->MODE = Entity::WORKING;
 		}
 
-		/**
-		 * get the guid of this entity if it exists
-		 *
-		 * @return int $guid
-		 * @author Ozone 
-		 **/
 		public function getGuid() {
-			if (isset($guid)) {
-				return $this->guid;
-			}
-			return false;
+			return $this->guid;
 		}
 
-		/**
-		 * set the guid of this entity
-		 * 
-		 * @param string $guid
-		 * @return void
-		 **/
 		public function setGuid($guid) {
 			$this->guid = $guid;
 		}
 
-		/**
-		 * get the type of this entity
-		 *
-		 * @return void
-		 * @author Ozone
-		 **/
-		public function getType() {
-			return $this->type;
-		}
-
-		/**
-		 * set the type of this entity
-		 *
-		 * @return void
-		 * @author Ozone
-		 **/
-		public function setType($type) {
-			$this->type = $type;
-		}
-
-		/**
-		 * get the group of this entity
-		 *
-		 * @return void
-		 * @author Ozone
-		 **/
-		public function getGroup() {
-			return $this->group;
-		}
-
-		/**
-		 * set the group of this entity
-		 *
-		 * @return void
-		 * @author Ozone
-		 **/
-		public function setGroup($group) {
-			$this->group = $group;
-		}
-
-		/**
-		 * get the name of this entity
-		 * 
-		 * @param none
-		 * @return void
-		 **/
-		public function getName() {
-			return $this->name;
-		}
-
-		/**
-		 * set the name of this entity
-		 * 
-		 * @param string $name
-		 * @return void
-		 **/
-		public function setName($name) {
-			$this->name = $name;
-		}
-
-		/**
-		 * get the space of this entity
-		 * 
-		 * @return void
-		 **/
-		public function getSpace() {
-			return $this->space;
-		}
-
-		/**
-		 * set the space of this entity
-		 * 
-		 * @param Space $space
-		 * @return void
-		 **/
-		public function setSpace(Space $space) {
-			$this->space = $space;
-		}
-
-		/**
-		 * wake up
-		 *
-		 * @return void
-		 **/
 		public function wake() {
-
+			$this->MODE = Entity::WORKING;
 		}
 
-		/**
-		 * go to sleep
-		 *
-		 * @return void
-		 **/
+
 		public function sleep() {
-
+			$this->MODE = Entity::IDLE;
 		}
 
-		/**
-		 * undocumented function
-		 * @param 
-		 * @return void
-		 **/
-		public function run(Action $action) {
-			if (!$this->canRunAction($action)) {
+		public function __get($name){
+			if (isset($this->$name)) {
+				return $this->soul[$name];
+			} else {
+				return null;
+			}
+		}
+
+		public function __set($name, $value){
+			$this->soul[$name] = $value;
+		}
+
+		public function __isset($name){
+			if (isset($this->soul[$name])) {
+				return true;
+			} else {
 				return false;
 			}
-			$action->start($this);
 		}
 
-		/**
-		 * undocumented function
-		 * @param 
-		 * @return void
-		 **/
-		public function canRunAction(Action $action) {
-			return true;
-		}
-
+		abstract public function work();
 	}
 
 ?>

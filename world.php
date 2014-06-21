@@ -11,6 +11,10 @@
 	$mother = new Mother($space);
 
 	$commander = $mother->create('commander', '', 'commander');
-	$robot = $mother->create('robot', 'o1', '');
-	$commander->command($robot, new Action());
+	$robot = $mother->create('robot', 'O1', '');
+	$commander->command($robot, new Introduce());
+
+	while(1){
+		$space->run();
+	}
 ?>

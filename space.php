@@ -97,5 +97,11 @@
 			$this->set($this->nextGuid, $entity);
 			$this->nextGuid++;
 		}
+
+		public function run(){
+			foreach ($this->entities as $entity) {
+				$entity->work();
+			}
+		}
 	}
 ?>
